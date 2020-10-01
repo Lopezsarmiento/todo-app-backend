@@ -5,11 +5,20 @@ GET http://localhost:4000/
 GET  http://localhost:4000/api/todos
 
 ###
+
+
+GET  http://localhost:4000/api/todoById/5f761d117c59853785354b0
+###
+
+DELETE http://localhost:4000/api/deleteTodo/5f761d117c59853785354b03
+
+###
+
 POST http://localhost:4000/api/createTodo
 content-type: application/json
 
 {
-    "title": "sample todo",
+    "title": "buy dog's food",
     "isCompleted": false
 }
 

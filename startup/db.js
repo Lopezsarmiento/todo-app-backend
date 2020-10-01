@@ -1,8 +1,8 @@
 "use strict";
 const mongoose = require("mongoose");
+const config = require("../config/dev.json");
 
-const uri =
-  "mongodb+srv://sumercisco:B0rc0l0n0@sumercisco.ihoup.mongodb.net/sample_todoapp";
+const uri = config.uri;
 
 const connectDB = async () => {
   try {
