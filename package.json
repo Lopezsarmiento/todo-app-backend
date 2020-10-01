@@ -1,0 +1,18 @@
+{
+  "name": "todo-app-backend",
+  "version": "1.0.0",
+  "description": "Restful Api with Nodejs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Diego Francisco Lopez Sarmiento",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
