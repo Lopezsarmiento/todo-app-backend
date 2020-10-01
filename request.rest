@@ -4,4 +4,13 @@ GET http://localhost:4000/
 
 GET  http://localhost:4000/api/todos
 
+###
+POST http://localhost:4000/api/createTodo
+content-type: application/json
+
+{
+    "title": "sample todo",
+    "isCompleted": false
+}
+
 

@@ -1,6 +1,7 @@
 "use strict";
 // Dependencies
 const express = require("express");
+const connectDB = require("./startup/db");
 const todos = require("./routes/todos");
 const home = require("./routes/home");
 const app = express();
@@ -13,6 +14,8 @@ app.use(express.urlencoded({ extended: true }));
 //Routes
 app.use("/api", todos);
 app.use("/", home);
+
+connectDB();
 
 // start server
 app.listen(PORT, () => {
