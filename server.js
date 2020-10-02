@@ -20,10 +20,10 @@ app.use(express.static("public"));
 app.use("/api", todos);
 app.use("/", home);
 
-// start db
+// Start db
 connectDB();
 
-// start server
+// Start server
 app.listen(PORT, () => {
   console.log(`listening on port: ${PORT}`);
 });
