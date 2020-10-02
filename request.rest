@@ -7,18 +7,28 @@ GET  http://localhost:4000/api/todos
 ###
 
 
-GET  http://localhost:4000/api/todoById/5f761d117c59853785354b0
+GET  http://localhost:4000/api/todobyid/5f7775c844f1124000f47383
 ###
 
-DELETE http://localhost:4000/api/deleteTodo/5f761d117c59853785354b03
+DELETE http://localhost:4000/api/delete/5f762ac3ea9e843bb8fd7084
 
 ###
 
-POST http://localhost:4000/api/createTodo
+POST http://localhost:4000/api/create
 content-type: application/json
 
 {
-    "title": "buy dog's food",
+    "title": "do van hack videos",
+    "isCompleted": false
+}
+
+###
+PUT http://localhost:4000/api/update/5f762ac3ea9e843bb8fd7084
+content-type: application/json
+
+{
+    "id": "5f762ac3ea9e843bb8fd7084",
+    "title": "walk the dog",
     "isCompleted": false
 }
 

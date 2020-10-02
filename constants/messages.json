@@ -1,0 +1,20 @@
+{
+  "messages": {
+    "recordNotFound": "No records found with the given id.",
+    "recordAlreadyInDb": "The submitted todo has been added previously.",
+    "recordAdded": "The todo was added successfully.",
+    "recordDeleted": "The todo was deleted successfully.",
+    "recordUpdated": "The todo was updated successfully.",
+    "idNotFound": "The todo with the given ID has not been found.",
+    "idFormat": "Incorrect ID format.",
+    "missingId": "An Id value must be included."
+  },
+  "routes": {
+    "home": "/",
+    "createTodo": "/create",
+    "getTodos": "/todos",
+    "getTodoById": "/todobyid/:id",
+    "updateTodo": "/update/:id",
+    "deleteTodo": "/delete/:id"
+  }
+}

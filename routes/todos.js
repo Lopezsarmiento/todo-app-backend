@@ -4,9 +4,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
 const { Todo, validateTodo } = require("../models/todo");
+const { messages, routes } = require("../constants/messages.json");
 
 // Get all todos
-router.get("/todos", async (req, res) => {
+router.get(routes.getTodos, async (req, res) => {
   try {
     const todos = await Todo.find().sort("title");
     res.json(todos);
@@ -16,17 +17,17 @@ router.get("/todos", async (req, res) => {
 });
 
 // Get todo by Id
-router.get("/todoById/:id", async (req, res) => {
+router.get(routes.getTodoById, async (req, res) => {
   const { id } = req.params;
   // validate that id has been passed as param
   if (!id) {
-    return res.status(400).send("An id value must be included for the search");
+    return res.status(400).send(messages.missingId);
   }
 
   // Validate id matches mongoose type
   const isValidId = isValidObjectdId(id);
   if (!isValidId) {
-    return res.status(400).send("The id format is not the correct.");
+    return res.status(400).send(messages.idFormat);
   }
 
   try {
@@ -35,7 +36,7 @@ router.get("/todoById/:id", async (req, res) => {
 
     // todo not found
     if (!result) {
-      return res.status(400).send("No record found with the id given!");
+      return res.status(400).send(messages.recordNotFound);
     }
     res.json(result);
   } catch (error) {
@@ -44,7 +45,7 @@ router.get("/todoById/:id", async (req, res) => {
 });
 
 // Create new todo
-router.post("/createTodo", async (req, res) => {
+router.post(routes.createTodo, async (req, res) => {
   // validate todo props
   const { error } = validateTodo(req.body);
   if (error) {
@@ -57,7 +58,7 @@ router.post("/createTodo", async (req, res) => {
   // Check if todo is already in the db
   let todo = await Todo.findOne({ title: title });
   if (todo) {
-    return res.status(400).send("The todo submitted is already added");
+    return res.status(400).send(messages.recordAlreadyInDb);
   }
 
   // create todo obj for saving in db
@@ -74,7 +75,7 @@ router.post("/createTodo", async (req, res) => {
       id: _id,
       title,
       isCompleted,
-      message: "The todo was successfully added",
+      message: messages.recordAdded,
     };
     // send message after saving successfully
     res.json(savedTodo);
@@ -83,36 +84,68 @@ router.post("/createTodo", async (req, res) => {
   }
 });
 
-// Deletes todo
-router.delete("/deleteTodo/:id", async (req, res) => {
+// Delete todo
+router.delete(routes.deleteTodo, async (req, res) => {
   const { id } = req.params;
   // validate that id has been passed as param
   if (!id) {
-    return res.status(400).send("An id value must be included for the search");
+    return res.status(400).send(messages.missingId);
   }
 
   // Validate id matches mongoose type
   const isValidId = isValidObjectdId(id);
   if (!isValidId) {
-    return res.status(400).send("The id format is not the correct.");
+    return res.status(400).send(messages.idFormat);
   }
 
   try {
     //find todo with the specific id and remove it from db
     const result = await Todo.findByIdAndRemove(id);
-    console.log("result deleting: ", result);
     // if id passed is not in db
     if (!result) {
-      return res.status(400).send("The todo with the given ID was not found");
+      return res.status(400).send(messages.recordNotFound);
     }
 
     const deletedTodo = {
       id: result._id,
       title: result.title,
       isCompleted: result.isCompleted,
-      message: "The todo was successfully deleted.",
+      message: messages.recordDeleted,
     };
     res.json(deletedTodo);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+// Update todo
+router.put(routes.updateTodo, async (req, res) => {
+  // validate todo props
+  const { error } = validateTodo(req.body);
+  if (error) {
+    return res.status(400).send(error.details[0].message);
+  }
+
+  try {
+    const { id, title, isCompleted } = req.body;
+    // look for todo in db and update
+    const result = await Todo.findByIdAndUpdate(id, {
+      title,
+      isCompleted,
+    });
+
+    // todo not found by id
+    if (!result) {
+      return res.status(400).send(messages.recordNotFound);
+    }
+
+    const updatedTodo = {
+      id: result._id,
+      title: result.title,
+      isCompleted: result.isCompleted,
+      message: messages.recordUpdated,
+    };
+    res.json(updatedTodo);
   } catch (error) {
     res.status(400).send(error);
   }

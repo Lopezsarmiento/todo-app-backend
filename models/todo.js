@@ -15,11 +15,12 @@ const todoSchema = new mongoose.Schema({
 
 // compile schema into Todo module
 const Todo = mongoose.model("Todo", todoSchema);
-Todo.id = new mongoose.Types.ObjectId();
+//Todo.id = new mongoose.Types.ObjectId();
 
 // validate props using Joi
 const validateTodo = (todo) => {
   const schema = Joi.object({
+    id: Joi.string(),
     title: Joi.string().min(3).max(30).required(),
     isCompleted: Joi.boolean().required(),
   });
