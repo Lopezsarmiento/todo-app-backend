@@ -54,6 +54,7 @@ router.post(routes.createTodo, async (req, res) => {
 
   // get todo prop values from request
   const { title, isCompleted } = req.body;
+  console.log(title, isCompleted);
 
   // Check if todo is already in the db
   let todo = await Todo.findOne({ title: title });
@@ -72,7 +73,7 @@ router.post(routes.createTodo, async (req, res) => {
     const { _id, title, isCompleted } = await todo.save();
 
     const savedTodo = {
-      id: _id,
+      _id,
       title,
       isCompleted,
       message: messages.recordAdded,
@@ -107,7 +108,7 @@ router.delete(routes.deleteTodo, async (req, res) => {
     }
 
     const deletedTodo = {
-      id: result._id,
+      _id: result._id,
       title: result.title,
       isCompleted: result.isCompleted,
       message: messages.recordDeleted,
@@ -140,7 +141,7 @@ router.put(routes.updateTodo, async (req, res) => {
     }
 
     const updatedTodo = {
-      id: result._id,
+      _id: result._id,
       title: result.title,
       isCompleted: result.isCompleted,
       message: messages.recordUpdated,
